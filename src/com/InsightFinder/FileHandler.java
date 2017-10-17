@@ -2,7 +2,9 @@ package com.InsightFinder;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class FileHandler implements Runnable{
@@ -32,11 +34,16 @@ public class FileHandler implements Runnable{
     }
 
     private void addLine(String msg) {
-        int len = msg.length();
         String[] words = msg.split("[\\W&&[^\"']]");
+        // create a set to avoid creating multiple index for a msg
+        // with duplicate words
+        Set<String> set = new HashSet<>();
         for (String word : words) {
-            if (!word.equals("")) {
-                createIndex(word, msg);
+            // force every word to lowercase before storage
+            String wordLowerCase = word.toLowerCase();
+            if (!wordLowerCase.equals("") && !set.contains(wordLowerCase)) {
+                createIndex(wordLowerCase, msg);
+                set.add(wordLowerCase);
             }
         }
     }

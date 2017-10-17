@@ -32,8 +32,8 @@ public class Main {
         executors.shutdown();
 
         // print out the map
-        System.out.println("created Map: ");
-        System.out.println(typeaheadMap.toString());
+//        System.out.println("created Map: ");
+//        System.out.println(typeaheadMap.toString());
 
         // create word finder class
         WordFinder wordFinder = new WordFinder(typeaheadMap);
@@ -48,7 +48,7 @@ public class Main {
                 wordFinder.summary();
                 break;
             }
-            wordFinder.find(word);
+            wordFinder.find(word.toLowerCase());
         }
     }
 }

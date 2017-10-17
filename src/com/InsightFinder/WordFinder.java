@@ -10,15 +10,15 @@ public class WordFinder {
     private int hitCount = 0;
 
     public WordFinder(ConcurrentHashMap<String, List<String>> typeaheadMap) {
+
         this.typeaheadMap = typeaheadMap;
     }
 
     public void find(String word) {
         searchCount++;
+
         if (typeaheadMap.containsKey(word)) {
             List<String> indexList = typeaheadMap.get(word);
-            
-            hitCount += indexList.size();
             
             List<String> matchedMsgs = new ArrayList<>();
             for (String msg : indexList) {
@@ -36,7 +36,6 @@ public class WordFinder {
         }
     }
 
-
     public void summary() {
         System.out.println("Summary: ");
         System.out.println("searchCount : " + searchCount + " " +
@@ -49,8 +48,12 @@ public class WordFinder {
         String[] msgArr = msg.split(" ");
         StringBuilder sb = new StringBuilder();
         for (String str : msgArr) {
-            if (str.equals(word)) {
+            // transform str to pure lowercase word
+            String transformedStr = str.replaceAll("[\\W&&[^\"']]", "").toLowerCase();
+            if (transformedStr.equals(word)) {
+                // append the uppercased orginal str
                 sb.append(str.toUpperCase() + " ");
+                hitCount++;
             } else {
                 sb.append(str + " ");
             }
