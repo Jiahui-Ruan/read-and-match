@@ -34,6 +34,7 @@ public class WordFinder {
         } else {
             System.out.println("Not found!");
         }
+        System.out.println();
     }
 
     public void summary() {
